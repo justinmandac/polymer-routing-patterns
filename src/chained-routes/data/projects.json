@@ -1,0 +1,13 @@
+{
+  "status": "success",
+  "data" : [
+    {
+      "title": "Zero Dawn",
+      "description" : "Lorem ipsum dolor sit amet consectutir. Adipiscing est."
+    },
+    {
+      "title": "MK Ultra",
+      "description": "Lorem ipsum dolor sit amet consectutir. Adipiscing est."
+    }
+  ]
+}
