@@ -1,0 +1,72 @@
+<link rel="import" href="../../bower_components/app-layout/app-layout.html">
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../page-imports.html">
+<link rel="import" href="about-page.html">
+<link rel="import" href="home-page.html">
+<link rel="import" href="projects-page.html">
+
+<dom-module id="chained-routes">
+  <template>
+    <app-location route="{{route}}" use-hash-as-path></app-location>
+    <!--  Only use the top-level <app-route> for switching views. -->
+    <app-route id="pageRoute"
+      route="{{route}}"
+      pattern="/:page"
+      data="{{routeData}}"
+      on-data-changed="_onPageChanged">
+    </app-route>
+
+    <app-drawer-layout fullbleed>
+      <app-drawer slot="drawer">
+        <ul>
+          <li><a href="#/">Home</a></li>
+          <li><a href="#/about">About</a></li>
+          <li><a href="#/projects">Projects</a></li>
+        </ul>
+      </app-drawer>
+      <app-header-layout>
+        <app-header slot="header">Header</app-header>
+      </app-header-layout>
+
+      <iron-pages attr-for-selected="data-name" selected="[[page]]" fallback-selection="view404">
+        <home-page data-name="" route="{{route}}"></home-page>
+        <about-page data-name="about" route="{{route}}"></about-page>
+        <projects-page data-name="projects" route="{{route}}"></projects-page>
+        <div data-name="view404">
+          Page Not Found
+        </div>
+      </iron-pages>
+    </app-drawer-layout>
+  </template>
+  <script>
+    (() => {
+      class ChainedRoutes extends Polymer.Element {
+        static get is() { return 'chained-routes'; }
+        static get properties() {
+          return {
+            page: {
+              type: String,
+              value: '',
+            },
+
+            route: {
+              type: Object,
+              value: () => ({}),
+            },
+
+            routeData: {
+              type: Object,
+              value: () => ({}),
+            },
+          };
+        }
+
+        _onPageChanged(evt) {
+          this.page = evt.detail.value.page;
+        }
+      }
+
+      customElements.define(ChainedRoutes.is, ChainedRoutes);
+    })();
+  </script>
+</dom-module>

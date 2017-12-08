@@ -1,0 +1,17 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="about-page">
+  <template>
+    <app-route id="pageRoute" route="{{route}}" pattern="/about"></app-route>
+    About Page
+  </template>
+  <script>
+    (() => {
+      class AboutPage extends Polymer.Element {
+        static get is() { return 'about-page'; }
+      }
+
+      customElements.define(AboutPage.is, AboutPage);
+    })();
+  </script>
+</dom-module>

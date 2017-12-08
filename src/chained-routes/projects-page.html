@@ -1,0 +1,78 @@
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<dom-module id="projects-page">
+  <template>
+    <app-route id="pageRoute"
+      route="{{route}}"
+      pattern="/projects"
+      tail="{{subroute}}"
+      on-active-changed="activated"
+    >
+    </app-route>
+    <app-route
+      route="{{subroute}}"
+      pattern="/:project"
+      data="{{projectData}}"
+      on-data-changed="_onProjectDataChanged">
+    </app-route>
+
+    <iron-pages
+      selected="[[project]]"
+      attr-for-selected="data-name"
+      fallback-selection="project404">
+      <div data-name="">Projects Page</div>
+      <div data-name="detail">
+        Project Details
+      </div>
+      <div data-name="project404">Project not found!</div>
+    </iron-pages>
+  </template>
+  <script>
+    (() => {
+      class ProjectsPage extends Polymer.Element {
+        static get is() { return 'projects-page'; }
+        static get properties() {
+          return {
+            project: {
+              type: String,
+              value: '',
+            },
+
+            route: {
+              type: Object,
+              value: () => ({}),
+            },
+
+            subroute: {
+              type: Object,
+              value: () => ({}),
+            },
+
+            queryParams: {
+              type: Object,
+              value: () => ({}),
+            }
+
+          };
+        }
+
+        activated(evt) {
+          if (!evt.detail.value) {
+            this.project = '';
+          }
+
+          console.log(`${this.localName} is active.`);
+          // load projects
+        }
+
+
+        _onProjectDataChanged(evt) {
+          this.project = evt.detail.value.project || '';
+        }
+      }
+
+      customElements.define(ProjectsPage.is, ProjectsPage);
+    })();
+  </script>
+</dom-module>
