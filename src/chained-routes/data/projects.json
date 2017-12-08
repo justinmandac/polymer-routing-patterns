@@ -3,10 +3,12 @@
   "data" : [
     {
       "title": "Zero Dawn",
+      "name": "zero-dawn",
       "description" : "Lorem ipsum dolor sit amet consectutir. Adipiscing est."
     },
     {
       "title": "MK Ultra",
+      "name" : "mk-ultra",
       "description": "Lorem ipsum dolor sit amet consectutir. Adipiscing est."
     }
   ]

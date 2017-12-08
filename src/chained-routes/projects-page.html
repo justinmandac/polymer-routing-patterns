@@ -16,7 +16,14 @@
       route="{{subroute}}"
       pattern="/:project"
       data="{{projectData}}"
+      tail="{{projectRoute}}"
       on-data-changed="_onProjectDataChanged">
+    </app-route>
+
+    <app-route id="projectRoute"
+      pattern="/:projectName"
+      route="{{projectRoute}}"
+      on-data-changed="_onSelectedProjectChanged">
     </app-route>
 
     <iron-ajax id="projectsXhr" url="data/projects.json">
@@ -30,12 +37,16 @@
       <div data-name="">
         <template is="dom-repeat" items="[[projectList]]">
           <div>
-            <h3>[[item.title]]</h3>
+            <h3>
+              <a href$="#/projects/detail/[[item.name]]">[[item.title]]</a>
+            </h3>
             <p>[[item.description]]</p>
           </div>
         </template>
       </div>
       <div data-name="detail">
+        <!-- Don't forget the trailing / -->
+        <div><a href="#/projects/">Go Back</a></div>
         Project Details
       </div>
       <div data-name="project404">Project not found!</div>
@@ -55,6 +66,11 @@
             projectList: {
               type: Array,
               value: () => [],
+            },
+
+            projectRoute: {
+              type: Object,
+              value: () => ({}),
             },
 
             route: {
@@ -91,6 +107,10 @@
 
         _onProjectDataChanged(evt) {
           this.project = evt.detail.value.project || '';
+        }
+
+        _onSelectedProjectChanged(evt) {
+          console.log(evt.detail);
         }
       }
 
