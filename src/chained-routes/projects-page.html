@@ -22,11 +22,14 @@
     <app-route id="projectRoute"
       pattern="/:projectName"
       route="{{projectRoute}}"
-      on-data-changed="_onSelectedProjectChanged">
+      on-data-changed="_onSelectedProjectChanged"
+      on-active-changed="_onProjectChanged">
     </app-route>
 
-    <iron-ajax id="projectsXhr" url="data/projects.json">
+    <iron-ajax id="projectsXhr" method="get" url="data/projects.json">
     </iron-ajax>
+
+    <iron-ajax id="detailXhr" method="get"></iron-ajax>
 
     <h1>Projects</h1>
     <iron-pages
@@ -46,7 +49,7 @@
       <div data-name="detail">
         <!-- Don't forget the trailing / -->
         <div><a href="#/projects/">Go Back</a></div>
-        Project Details
+        <h3>[[selectedProject.title]]</h3>
       </div>
       <div data-name="project404">Project not found!</div>
     </iron-pages>
@@ -77,6 +80,11 @@
               value: () => ({}),
             },
 
+            selectedProject: {
+              type: Object,
+              value: () => ({}),
+            },
+
             subroute: {
               type: Object,
               value: () => ({}),
@@ -97,13 +105,31 @@
           // load projects
         }
 
+        /**
+         * Handles the activation/deactivation of the details subpage
+         */
+        _onProjectChanged(evt) {
+          if (!evt.target.active) {
+            this.selectedProject = undefined;
+          }
+        }
 
         _onProjectDataChanged(evt) {
           this.project = evt.detail.value.project || '';
         }
 
         _onSelectedProjectChanged(evt) {
-          console.log(evt.detail);
+          const {projectName} = evt.detail.value;
+          console.log(`Selected project is ${projectName}`);
+
+          if (!!projectName) {
+            this.$.detailXhr.url = `data/projects/${projectName}.json`;
+            this.$.detailXhr.generateRequest().completes.then(() => {
+              this.selectedProject = this.$.detailXhr.lastResponse;
+            }).catch(() => {
+              this.selectedProject = undefined;
+            });
+          }
         }
       }
 
