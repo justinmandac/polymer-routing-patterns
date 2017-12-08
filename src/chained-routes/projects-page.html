@@ -17,11 +17,12 @@
       on-data-changed="_onProjectDataChanged">
     </app-route>
 
+    <h1>Projects</h1>
     <iron-pages
       selected="[[project]]"
       attr-for-selected="data-name"
       fallback-selection="project404">
-      <div data-name="">Projects Page</div>
+      <div data-name="">Projects Home</div>
       <div data-name="detail">
         Project Details
       </div>
@@ -60,6 +61,7 @@
         activated(evt) {
           if (!evt.detail.value) {
             this.project = '';
+            return;
           }
 
           console.log(`${this.localName} is active.`);

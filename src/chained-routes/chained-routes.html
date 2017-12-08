@@ -1,4 +1,8 @@
 <link rel="import" href="../../bower_components/app-layout/app-layout.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../../bower_components/paper-styles/default-theme.html">
+<link rel="import" href="../../bower_components/paper-styles/typography.html">
 <link rel="import" href="../../bower_components/polymer/polymer-element.html">
 <link rel="import" href="../page-imports.html">
 <link rel="import" href="about-page.html">
@@ -7,6 +11,16 @@
 
 <dom-module id="chained-routes">
   <template>
+    <style>
+      :host {
+        @apply(--paper-font-common-base)
+      }
+
+      app-toolbar {
+        background-color: var(--primary-color);
+        color: #FFF;
+      }
+    </style>
     <app-location route="{{route}}" use-hash-as-path></app-location>
     <!--  Only use the top-level <app-route> for switching views. -->
     <app-route id="pageRoute"
@@ -18,14 +32,25 @@
 
     <app-drawer-layout fullbleed>
       <app-drawer slot="drawer">
-        <ul>
-          <li><a href="#/">Home</a></li>
-          <li><a href="#/about">About</a></li>
-          <li><a href="#/projects">Projects</a></li>
-        </ul>
+        <app-toolbar></app-toolbar>
+        <paper-listbox>
+          <a href="#/">
+            <paper-item>Home</paper-item>
+          </a>
+          <a href="#/about">
+            <paper-item>About</paper-item>
+          </a>
+          <a href="#/projects">
+            <paper-item>Projects</paper-item>
+          </a>
+        </paper-listbox>
       </app-drawer>
       <app-header-layout>
-        <app-header slot="header">Header</app-header>
+        <app-header slot="header">
+          <app-toolbar>
+            <span main-title>Chained Routing Example</span>
+          </app-toolbar>
+        </app-header>
       </app-header-layout>
 
       <iron-pages attr-for-selected="data-name" selected="[[page]]" fallback-selection="view404">
