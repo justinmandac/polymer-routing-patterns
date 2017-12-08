@@ -9,8 +9,7 @@
       route="{{route}}"
       pattern="/projects"
       tail="{{subroute}}"
-      on-active-changed="activated"
-    >
+      on-active-changed="activated">
     </app-route>
     <app-route
       route="{{subroute}}"
@@ -82,12 +81,6 @@
               type: Object,
               value: () => ({}),
             },
-
-            queryParams: {
-              type: Object,
-              value: () => ({}),
-            }
-
           };
         }
 
