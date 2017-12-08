@@ -1,0 +1,81 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../page-imports.html">
+
+<!--
+  `<basic-routing>` entry point for demonstrating basic routing with Polymer.
+-->
+<dom-module id="basic-routing">
+  <template>
+    <!-- Setup route -->
+    <app-location route="{{route}}" use-hash-as-path></app-location>
+    <app-route id="pageRoute"
+      pattern="/:page"
+      route="{{route}}"
+      data="{{routeData}}"
+      on-data-changed="_onRouteDataChanged">
+    </app-route>
+
+    <!-- Setup pages based on #pageRoute.data -->
+    <iron-pages id="pageControl"
+      attr-for-selected="data-name"
+      selected="[[page]]"
+      fallback-selection="view404"
+      on-selected-item-changed="_onSelectedChanged"
+    >
+      <!-- use a data property since name is not a known attribute of <div> -->
+      <div data-name="">
+        Home
+      </div>
+      <div data-name="about">
+        About
+      </div>
+      <div data-name="projects">
+        Projects
+      </div>
+      <div data-name="view404">
+        Page Not Found!
+      </div>
+    </iron-pages>
+  </template>
+  <script>
+    (() => {
+      class BasicRouting extends Polymer.Element {
+        static get is() { return 'basic-routing'; }
+        static get properties() {
+          return {
+            currentPage: {
+              type: Object,
+              value: () => ({}),
+              readOnly: true,
+            },
+
+            page: {
+              type: String,
+              value: '',
+            },
+
+            route: {
+              type: Object,
+              value: () => ({}),
+            },
+
+            routeData: {
+              type: Object,
+              value: () => ({}),
+            },
+          };
+        }
+
+        _onRouteDataChanged(evt) {
+          this.page = evt.detail.value.page;
+        }
+
+        _onSelectedChanged(evt) {
+          this._setCurrentPage(evt.detail.value);
+        }
+      }
+
+      customElements.define(BasicRouting.is, BasicRouting);
+    })();
+  </script>
+</dom-module>

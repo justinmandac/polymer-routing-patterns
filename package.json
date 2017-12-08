@@ -1,0 +1,14 @@
+{
+  "name": "polymer-routing-patterns",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/web-component-tester/bin/wct src/**/*_test.html"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "web-component-tester": "^6.4.1"
+  }
+}

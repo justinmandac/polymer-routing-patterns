@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>&lt;main-app&gt;</title>
+    <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../bower_components/web-component-tester/browser.js"></script>
+    <link rel="import" href="basic-routing.html">
+  </head>
+  <body>
+    <test-fixture id="main">
+      <template>
+        <basic-routing></basic-routing>
+      </template>
+    </test-fixture>
+    <script>
+      describe('<basic-routing>', () => {
+        let component;
+        const routeFactory = (routeName) => ({
+          prefix: '',
+          path: `/${routeName}`,
+          __queryParams: {},
+        });
+
+        beforeEach(() => {
+          component = fixture('main');
+        });
+
+        it('should be a valid Polymer Element', () => {
+          assert.instanceOf(component, HTMLElement);
+        });
+
+        it('should change the page name when the route changes', () => {
+          component.route = routeFactory('');
+          assert.equal('', component.page);
+
+          component.route = routeFactory('about');
+          assert.equal('about', component.page);
+
+          component.route = routeFactory('projects');
+          assert.equal('projects', component.page);
+        });
+
+        it('should display the 404 page if the route does not match any pages',
+          (done) => {
+            component.route = routeFactory('foopage');
+            flush(() => {
+              assert.equal('view404', component.currentPage.dataset.name);
+              done();
+            });
+        });
+      });
+    </script>
+  </body>
+</html>
