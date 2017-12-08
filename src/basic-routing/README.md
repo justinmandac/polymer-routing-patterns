@@ -1,3 +1,3 @@
 # Basic Routing
 
-Hello world
+Example for the simplest route handling possible.
